@@ -14,7 +14,7 @@ def build_prompt(data: Dict) -> str:
     date_str = collect_time[:10] if collect_time else "今天"
     time_str = collect_time[11:19] if len(collect_time) > 19 else "当前"
 
-    upcoming_hours = h[:6]  # 未来6小时
+    upcoming_hours = h[:18]  # 未来18小时
     hourly_lines = []
     for item in upcoming_hours:
         hour_label = item.get("forecast_hour", "")[-5:]
@@ -34,17 +34,18 @@ def build_prompt(data: Dict) -> str:
         return f"{val}{unit}" if val is not None else "暂无"
 
     prompt = f"""
-你是一个贴心的生活助手，请根据下面的天气数据，生成一段通过邮件发送给用户的建议。
+你是一个贴心的天气生活助手，请根据下面的天气数据，生成一段通过邮件发送给用户的建议。
 
 要求：
-- 开头简洁说明今天是{date_str}，城市是{data['meta']['city']}
-- 用一两句话概括今日天气特点
-- 给出穿衣建议（考虑体感温度和风力）
-- 说明是否需要带伞
-- 简单判断是否适合户外运动并解释
-- 最后加一句建议做的事情、生活祝福或提醒
-- 整段话连贯自然，不分点，控制在200字以内
-- 注意邮件发送时间一般是早上，请结合这一特点
+1. 开头用一句自然的早安问候，然后直接切入天气
+2. 内容需包含：
+   - 今日天气特点概括（气温趋势、是否有雨）
+   - 穿衣建议（结合体感温度和风力）
+   - 是否需要带伞
+   - 是否适合户外运动（结合气温、降水、风力判断）
+   - 一句结合{data['meta']['city']}城市特点的简洁生活建议或祝福
+3. 风格：亲切、实用，适合早晨阅读，用户需要根据建议安排一天的活动
+4. 不分点，一段话完成，尽量控制在200字以内，但注意不在最后截断
 
 天气数据：
 {data['meta']['city']}实时观测：{date_str} {time_str}
@@ -62,18 +63,31 @@ def build_prompt(data: Dict) -> str:
 """
     return prompt.strip()
 
-def analyze_with_llm(prompt: str) -> str:
+def analyze_with_llm(prompt: str, max_retries: int = 3) -> str:
     client = openai.OpenAI(api_key=Config.LLM_API_KEY, base_url=Config.LLM_BASE_URL)
-    response = client.chat.completions.create(
-        model=Config.LLM_MODEL,
-        messages=[
-            {"role": "system", "content": "你是一个专业的天气生活助手。"},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=Config.LLM_TEMP,
-        max_tokens=400,
-    )
-    return response.choices[0].message.content.strip()
+    
+    for attempt in range(max_retries + 1):
+        response = client.chat.completions.create(
+            model=Config.LLM_MODEL,
+            messages=[
+                {"role": "system", "content": "你是一个专业的天气生活助手。输出要完整，不要中途截断。"},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=Config.LLM_TEMP,
+            max_tokens=500,  # 足够容纳 250 字中文
+        )
+        result = response.choices[0].message.content.strip()
+        
+        # 检查是否可能被截断（以不完整标点或句子结尾）
+        if result and result[-1] in "。！？…":
+            return result
+        
+        # 如果被截断且还有重试次数，重新生成
+        if attempt < max_retries:
+            logger.warning(f"输出可能被截断（结尾：{result[-20:]}），重新生成...")
+            continue
+    
+    return result  # 返回最后一次结果
 
 def generate_analysis_for_city(city_name: str) -> Optional[str]:
     """根据数据库中最新数据生成分析文本，失败返回None"""
