@@ -1,6 +1,7 @@
 # 🌤️ YusoWeather
 
-> 自动采集指定城市未来24小时内天气逐小时预报，调用语言大模型生成生活建议，并通过邮件推送给指定用户
+自动采集指定城市未来24小时内天气逐小时预报，调用语言大模型生成生活建议，并通过邮件推送给指定用户 
+
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
