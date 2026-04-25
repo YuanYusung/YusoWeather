@@ -16,7 +16,7 @@ def format_email_html(analysis_text: str, city_name: str = None) -> str:
     <div style="max-width:600px;margin:0 auto;font-family:'Microsoft YaHei', Arial, sans-serif;background:#f5f7fa;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.06);">
         <div style="background: linear-gradient(135deg, #a0c4ff 0%, #74a6f2 100%); padding: 28px 30px 20px; text-align: center;">
             <div style="font-size:48px; margin-bottom:8px;">🌤️</div>
-            <h2 style="color:white; margin:0; font-size:26px;">今日天气提醒</h2>
+            <h2 style="color:white; margin:0; font-size:26px;">今日{city_display}天气提醒</h2>
             <p style="color: rgba(255,255,255,0.85); margin:8px 0 0; font-size:14px;">出门前，花十秒看一眼天气 🌿</p>
         </div>
         <div style="background:white; margin: -12px 16px 20px; padding: 24px 24px 18px; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); line-height: 1.9; font-size: 15px; color: #2e3b4e;">
