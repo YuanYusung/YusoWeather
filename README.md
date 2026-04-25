@@ -4,6 +4,8 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+> ⚠️ **学习项目声明**  
+> 本项目是我学习 LLM API 调用的初次实践，代码结构相对简单，可能存在较多 bug 或不完善之处。欢迎提 Issue 或 PR 反馈问题，我会不断改进。感谢理解与支持！
 
 ## ✨ 功能特性
 
@@ -12,6 +14,7 @@
 - 🤖 **LLM 智能分析** – 接入 DeepSeek / OpenAI 等大语言模型，生成每日生活建议（穿衣、带伞、运动、祝福语等）  
 - 📧 **邮件推送** – 发送 HTML 邮件，支持单用户 / 多用户批量发送  
 - 🗂️ **多城市支持** – 可为不同城市多用户分别推送天气提醒
+
 
 ## 🚀 快速开始
 
