@@ -1,11 +1,11 @@
 # 🌤️ YusoWeather
 
-自动采集指定城市未来24小时内天气逐小时预报，调用语言大模型生成生活建议，并通过邮件推送给指定用户 
+自动采集指定城市未来24小时内天气逐小时预报，调用大语言模型生成生活建议，并通过邮件推送给指定用户 
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 > ⚠️ **学习项目声明**  
-> 本项目是我学习 LLM API 调用与与 Python 自动化的初次实践，代码结构相对简单，可能存在较多 bug 或不完善之处。欢迎提 Issue 或 PR 反馈问题，我会不断改进。感谢理解与支持！
+> 本项目是作者学习 LLM API 调用与的初次实践，代码结构相对简单，可能存在较多 bug 或不完善之处。欢迎提 Issue 或 PR 反馈问题，我会不断改进。感谢理解与支持！
 
 ## ✨ 功能特性
 
