@@ -87,6 +87,7 @@ python batch_send.py --file cities.csv
 | `DATA_DIR` | 数据存储目录 | `./data` |
 
 ## 📦 项目结构
+```text
 weather-llm/  
 ├── .env.example                 # 环境变量模板  
 ├── .gitignore  
@@ -105,6 +106,7 @@ weather-llm/
     ├── weather.db               # SQLite 数据库  
     ├── archive/                 # JSON 归档按日期分目录  
     └── latest_analysis_*.txt    # 最近一次分析文本缓存  
+```
 
 ## 📬 联系方式
 
